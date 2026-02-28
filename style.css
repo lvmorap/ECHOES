@@ -1,0 +1,42 @@
+/* ECHOES - CSS Reset + Variables */
+
+:root {
+    --bg:          #050510;   /* deep blue-black */
+    --pulse-1:     #1a1aff;   /* deep blue - base wave */
+    --pulse-2:     #00ffcc;   /* cyan neon - resonance wave */
+    --dissonance:  #9b00ff;   /* violet - dissonance mode */
+    --p1-color:    #00e5ff;   /* cyan - player 1 */
+    --p2-color:    #ff3d71;   /* coral/red - player 2 */
+    --text:        #ffffff;
+    --accent:      #ffeb00;   /* yellow - points, critical UI */
+    --echo-full:   #00ff88;   /* green neon - full echo meter */
+    --echo-empty:  #ff2222;   /* red - empty echo meter */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg);
+    font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
