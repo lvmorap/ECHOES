@@ -1,16 +1,16 @@
 /* ECHOES - CSS Reset + Variables */
 
 :root {
-    --bg:          #050510;   /* negro profundo azulado */
-    --pulse-1:     #1a1aff;   /* azul profundo — onda base */
-    --pulse-2:     #00ffcc;   /* cyan neón — onda de resonancia */
-    --dissonance:  #9b00ff;   /* violeta — modo disonancia */
-    --p1-color:    #00e5ff;   /* cyan — jugador 1 */
-    --p2-color:    #ff3d71;   /* coral/rojo — jugador 2 */
+    --bg:          #050510;   /* deep blue-black */
+    --pulse-1:     #1a1aff;   /* deep blue - base wave */
+    --pulse-2:     #00ffcc;   /* cyan neon - resonance wave */
+    --dissonance:  #9b00ff;   /* violet - dissonance mode */
+    --p1-color:    #00e5ff;   /* cyan - player 1 */
+    --p2-color:    #ff3d71;   /* coral/red - player 2 */
     --text:        #ffffff;
-    --accent:      #ffeb00;   /* amarillo — puntos, UI crítica */
-    --echo-full:   #00ff88;   /* verde neón — echo meter lleno */
-    --echo-empty:  #ff2222;   /* rojo — echo meter vacío */
+    --accent:      #ffeb00;   /* yellow - points, critical UI */
+    --echo-full:   #00ff88;   /* green neon - full echo meter */
+    --echo-empty:  #ff2222;   /* red - empty echo meter */
 }
 
 * {

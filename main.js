@@ -662,6 +662,7 @@ class EchoChaseMode extends GameMode {
     setup() {
         super.setup();
         this.determineCarrier();
+        // Initialize to allow first auto-score after 2 seconds (intentional delay)
         this.lastAutoScore = this.scene.time.now;
         this.pulseIndicator = this.scene.add.graphics();
         this.ui.showModeTitle('ECHO CHASE');
@@ -769,8 +770,9 @@ class DissonanceMode extends GameMode {
             this.isPhase2 = true;
             this.pulseField.toggleDissonance();
             
-            // Visual feedback
+            // Visual feedback for phase transition
             this.scene.cameras.main.shake(300, 0.008);
+            // Flash parameters: duration (ms), red, green, blue (violet flash)
             this.scene.cameras.main.flash(200, 150, 0, 255);
             audioSynth.playDissonanceShift();
         }
@@ -957,7 +959,7 @@ class ModeIntroScene extends Phaser.Scene {
     }
 
     init(data) {
-        this.modeName = data.modeName;
+        this.modeName = data.modeName || 'PulseDuel';
         this.countdown = 7;
     }
 
@@ -1163,6 +1165,8 @@ class GameScene extends Phaser.Scene {
 
     handleMovement() {
         const { w, a, s, d, up, down, left, right } = this.keys;
+        // 1/√2 ≈ 0.707 - ensures consistent speed in all 8 directions
+        const DIAGONAL_FACTOR = Math.SQRT1_2;
         
         // Player 1
         let p1DirX = 0, p1DirY = 0;
@@ -1171,10 +1175,10 @@ class GameScene extends Phaser.Scene {
         if (w.isDown) p1DirY -= 1;
         if (s.isDown) p1DirY += 1;
         
-        // Normalize diagonal
+        // Normalize diagonal movement
         if (p1DirX !== 0 && p1DirY !== 0) {
-            p1DirX *= 0.707;
-            p1DirY *= 0.707;
+            p1DirX *= DIAGONAL_FACTOR;
+            p1DirY *= DIAGONAL_FACTOR;
         }
         this.players.p1.move(p1DirX, p1DirY);
         
@@ -1185,9 +1189,10 @@ class GameScene extends Phaser.Scene {
         if (up.isDown) p2DirY -= 1;
         if (down.isDown) p2DirY += 1;
         
+        // Normalize diagonal movement
         if (p2DirX !== 0 && p2DirY !== 0) {
-            p2DirX *= 0.707;
-            p2DirY *= 0.707;
+            p2DirX *= DIAGONAL_FACTOR;
+            p2DirY *= DIAGONAL_FACTOR;
         }
         this.players.p2.move(p2DirX, p2DirY);
     }
@@ -1287,8 +1292,11 @@ class ResultScene extends Phaser.Scene {
         // Background
         this.add.rectangle(400, 300, 800, 600, 0x050510);
         
-        // Mode name
-        this.add.text(400, 150, this.data.modeName.toUpperCase().replace(/([A-Z])/g, ' $1').trim(), {
+        // Mode name - convert camelCase to spaced text (e.g., PulseDuel -> PULSE DUEL)
+        const modeDisplayName = this.data.modeName
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
+            .toUpperCase();
+        this.add.text(400, 150, modeDisplayName, {
             fontSize: '32px',
             fontFamily: 'Share Tech Mono, Courier New, monospace',
             color: '#00ffcc'
